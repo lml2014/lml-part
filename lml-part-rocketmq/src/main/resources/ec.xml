@@ -1,0 +1,18 @@
+<conf name="erp_wms" group="erp_gray3" loggerMdcField="clueId" openLoggerMdc="true">
+    <!--    queue sfa dubbo 无效-->
+    <rocketmq>
+        <!--        local event names 创建本地的publisher-->
+        <producerGroup localEventNames="*" namesrvAddr="">
+            <producer namesrvAddr="" groupName="" topic="" instanceName="" eventNames="">
+                <tag name="local" eventNames="*"/>
+                <tag name="remote" eventNames="1,2,3"/>
+            </producer>
+            <producer namesrvAddr="" groupName="" topic="" eventNames=""/>
+        </producerGroup>
+        <!--        local event names 创建本地的consumer-->
+        <consumerGroup localEventNames="*" namesrvAddr="">
+            <consumer namesrvAddr="" groupName="" topic="" consumeFromWhere="" tags=""/>
+            <consumer namesrvAddr="" groupName="" topic="" consumeFromWhere="" tags=""/>
+        </consumerGroup>
+    </rocketmq>
+</conf>
