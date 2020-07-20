@@ -11,12 +11,13 @@ import org.junit.Assert;
 public class BaseDemoA {
 
     public static void main(String[] args) {
+        System.out.println("-------------------- reverse");
         testReverse();
-        System.out.println("--------------------");
+        System.out.println("-------------------- middle");
         testMiddle();
-        System.out.println("--------------------");
+        System.out.println("-------------------- merge");
         testMerge();
-        System.out.println("--------------------");
+        System.out.println("-------------------- delete");
         testDelete();
         System.out.println("--------------------");
     }
@@ -31,9 +32,9 @@ public class BaseDemoA {
     }
 
     private static void testReverse() {
-        Node head = build(1, 2, 3, 4, 5);
-        NodeUtils.show(head);
-        Node reverse = reverse(head);
+        Node node = build(1, 2, 3, 4, 5);
+        NodeUtils.show(node);
+        Node reverse = reverse(node);
         NodeUtils.show(reverse);
     }
 
@@ -54,28 +55,26 @@ public class BaseDemoA {
     }
 
     public static Node deleteNode(Node head, int n) {
-        if (head == null || n <= 0) {
-            return head;
+        if (head == null) {
+            return null;
         }
+        int step = n;
         Node fast = head;
-        for (int i = 0; i < n; i++) {
-            if (fast == null) {
-                return head;
-            }
+        while (fast != null && step > 0) {
             fast = fast.next;
+            step--;
         }
-        if (fast == null){
-            head = head.next;
+        if (fast == null) {
             return head;
         }
         Node cur = new Node(0);
         cur.next = head;
         while (fast != null) {
-            cur = cur.next;
             fast = fast.next;
+            cur = cur.next;
         }
         cur.next = cur.next.next;
-        return cur;
+        return head;
     }
 
     public static Node merge(Node first, Node two) {
@@ -83,28 +82,26 @@ public class BaseDemoA {
             return two;
         }
         if (two == null) {
-            return first;
+            return null;
         }
         Node dummy = new Node(0);
         Node head = dummy;
-        Node f = first;
-        Node t = two;
-        while (f != null && t != null) {
-            if (f.val < t.val) {
-                dummy.next = new Node(f.val);
+        while (first != null && two != null) {
+            if (first.val <= two.val) {
+                dummy.next = new Node(first.val);
+                first = first.next;
                 dummy = dummy.next;
-                f = f.next;
             } else {
-                dummy.next = new Node(t.val);
+                dummy.next = new Node(two.val);
+                two = two.next;
                 dummy = dummy.next;
-                t = t.next;
             }
         }
-        if (f != null) {
-            dummy.next = f;
+        if (first != null) {
+            dummy.next = first;
         }
-        if (t != null) {
-            dummy.next = t;
+        if (two != null) {
+            dummy.next = two;
         }
         return head.next;
     }
@@ -113,13 +110,9 @@ public class BaseDemoA {
         if (head == null) {
             return 0;
         }
-        if (head.next == null) {
-            return head.val;
-        }
-        Node slow = head;
         Node fast = head;
+        Node slow = head;
         while (fast.next != null && fast.next.next != null) {
-//        while (fast != null && fast.next != null) {
             fast = fast.next.next;
             slow = slow.next;
         }
@@ -127,27 +120,27 @@ public class BaseDemoA {
     }
 
     public static Node reverse(Node head) {
-        if (head == null || head.next == null) {
-            return head;
+        if (head == null) {
+            return null;
         }
-        Node result = null;
+        Node node = null;
         while (head != null) {
             Node next = head.next;
-            head.next = result;
-            result = head;
+            head.next = node;
+            node = head;
             head = next;
         }
-        return result;
+        return node;
     }
 
     public static Node build(int... args) {
         Node dummy = new Node(0);
         Node head = dummy;
         for (int arg : args) {
-            head.next = new Node(arg);
-            head = head.next;
+            dummy.next = new Node(arg);
+            dummy = dummy.next;
         }
-        return dummy.next;
+        return head.next;
     }
 
 }

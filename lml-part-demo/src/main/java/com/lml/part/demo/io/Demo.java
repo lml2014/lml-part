@@ -7,8 +7,8 @@ package com.lml.part.demo.io;
 public class Demo {
 
     public static void main(String[] args) {
-        String a = "abcddd";
-        System.out.println(a);
+        long n = 0;
+        System.out.println(n <= 0);
     }
 
 }
